@@ -16,8 +16,8 @@
 
 DEVICE_PATH := device/motorola/mona
 
-# Inherit from motorola sm7435-common
-include device/motorola/sm7435-common/BoardConfigCommon.mk
+# Inherit from motorola sm6475-common
+include device/motorola/sm6475-common/BoardConfigCommon.mk
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := mona
