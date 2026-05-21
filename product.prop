@@ -6,7 +6,7 @@ ro.telephony.esim_slot_id=1
 ro.vendor.product.display=motorola edge 2024
 
 # Google
-ro.opa.device_model_id=motorola-avatrn
+ro.opa.device_model_id=motorola-mona
 
 # Radio
 ro.vendor.radio.imei.sv=21
