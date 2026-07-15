@@ -18,6 +18,12 @@
 TARGET_SCREEN_HEIGHT := 2712
 TARGET_SCREEN_WIDTH := 1220
 
+# Kernel
+ifneq ($(wildcard device/motorola/mona-kernel/Image),)
+TARGET_FORCE_PREBUILT_KERNEL := true
+TARGET_PREBUILT_KERNEL := device/motorola/mona-kernel/Image
+endif
+
 # Screen
 TARGET_SCREEN_DENSITY := 450
 
@@ -70,10 +76,12 @@ PRODUCT_PACKAGES += \
     Tag
 
 # PowerShare
+ifeq (,$(TARGET_PREBUILT_KERNEL))
 PRODUCT_PACKAGES += \
     vendor.lineage.powershare-service.default
 
 $(call soong_config_set,lineage_powershare,powershare_path,/sys/class/power_supply/wireless/device/tx_mode)
+endif
 
 # Properties
 PRODUCT_PACKAGES += \

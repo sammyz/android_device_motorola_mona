@@ -23,8 +23,24 @@ include device/motorola/sm6475-common/BoardConfigCommon.mk
 TARGET_BOOTLOADER_BOARD_NAME := mona
 
 # Kernel
+ifeq (,$(TARGET_PREBUILT_KERNEL))
 TARGET_KERNEL_CONFIG += \
 	vendor/ext_config/moto-parrot-mona.config
+else
+# Kernel Modules
+PREBUILT_KERNEL_PATH := $(dir $(TARGET_PREBUILT_KERNEL))
+BOARD_PREBUILT_DTBIMAGE_DIR := $(PREBUILT_KERNEL_PATH)/dtbs
+BOARD_PREBUILT_DTBOIMAGE := $(PREBUILT_KERNEL_PATH)/dtbo.img
+BOARD_SYSTEM_KERNEL_MODULES := $(wildcard $(PREBUILT_KERNEL_PATH)/system_dlkm/*.ko)
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(patsubst %,$(PREBUILT_KERNEL_PATH)/system_dlkm/%,$(shell cat $(PREBUILT_KERNEL_PATH)/system_dlkm/modules.load))
+BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(PREBUILT_KERNEL_PATH)/vendor_dlkm/*.ko)
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(patsubst %,$(PREBUILT_KERNEL_PATH)/vendor_dlkm/%,$(shell cat $(PREBUILT_KERNEL_PATH)/vendor_dlkm/modules.load))
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(PREBUILT_KERNEL_PATH)/vendor_dlkm/modules.blocklist
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(PREBUILT_KERNEL_PATH)/vendor_ramdisk/*.ko)
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(patsubst %,$(PREBUILT_KERNEL_PATH)/vendor_ramdisk/%,$(shell cat $(PREBUILT_KERNEL_PATH)/vendor_ramdisk/modules.load))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD  := $(patsubst %,$(PREBUILT_KERNEL_PATH)/vendor_ramdisk/%,$(shell cat $(PREBUILT_KERNEL_PATH)/vendor_ramdisk/modules.load.recovery))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(PREBUILT_KERNEL_PATH)/vendor_ramdisk/modules.blocklist
+endif
 
 # Partitions
 BOARD_MOT_DP_GROUP_SIZE := 9038725120 # ( BOARD_SUPER_PARTITION_SIZE - 4MB )
