@@ -64,3 +64,30 @@ This contribution includes the required platform patch under `patches/`;
 apply it with `tools/apply-recovery-patches.sh` before building the pinned
 TWRP revision. The script supports repeat application without duplicating
 changes. Android 15 /data decryption remains unsupported.
+
+
+## Android 15 crypto follow-up (2026-10-26)
+
+Image: `twrp-mona-aidl-unlock.img`, SHA256
+`3225e9aee36b6c27de92a0d748f711f84b806ad1e99b180ccb644d96336db8dc`.
+Version `3.7.1_12-mona-aidl-unlock`; recovery A readback matched the image.
+
+- Metadata mapper and existing DE keys loaded during normal recovery startup.
+- Stock AIDL Gatekeeper verified the user's PIN and Keystore accepted its token.
+- `twrp.user.0.decrypt=1`; internal Android storage directory readable.
+- Actual reads from System build.prop and Data packages.xml passed together.
+- PIN unlock repeated after normal Android A startup; original fingerprint and
+  SELinux Enforcing were verified. User confirmed the clock remained correct.
+- Continuous microSD logs started automatically on each recovery boot.
+- Source checks retain all 268 module hashes, matching TWRP fstab copies,
+  first-position microSD settings storage and boot-HAL manifest checks.
+
+These results supersede earlier notes that Data decryption was unsupported.
+They do not validate other firmware, secondary users, OTA, or full restore.
+Individual System backup is disabled by upstream Prepare_Super_Volume; raw
+Super backup remains the existing option. Do not equate mount success or a
+nonzero Data backup size with complete backup/restore validation.
+
+Codex implemented the new recovery integration and logger. The earlier
+Antigravity crypto setup is imported with attribution. AOSP Gatekeeper source
+and SavedByLight history/notices remain credited to their original authors.

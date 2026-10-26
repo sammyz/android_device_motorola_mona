@@ -16,8 +16,11 @@ The Android Open Source Project and SebaUbuntu's TWRP device tree generator
 The [twrpdtgen mona tree](https://github.com/twrpdtgen/android_device_motorola_mona/tree/mona-user-15-V2VAS35V.29-49-ST2.4-6a189-release-keys)
 at `0849e7941312418ebb4b8fef5e61c1a3835f16dd` was reviewed for comparison.
 It was not the working-tree base and no commits from it were cherry-picked.
-Codex was used to make **all changes in this contribution**, at sammyz's
-direction. The resulting recovery was tested on sammyz's phone, with
+Codex was used to make the original fixes and the new integration changes,
+at sammyz's direction. The subsequent crypto work also imports the user's
+earlier Antigravity QTI service/blob setup; it is credited separately. The
+Gatekeeper interface definitions remain AOSP's work, with original notices
+and provenance in the platform patch. The resulting recovery was tested on sammyz's phone, with
 sammyz confirming touch and clock visibility. TWRP itself is provided by
 TeamWin and its contributors.
 
@@ -55,9 +58,11 @@ See [validation and fix mapping](docs/VALIDATION.md). Touch, microSD,
 charging/battery readings, cutout clearance, EROFS mounts, normal Android
 reboot, and persistence of recovery were verified on the test device.
 
-**Android 15 wrapped-key /data decryption is unsupported.** Internal-storage
-mount errors remain; use microSD or ADB sideload. RTC wall-clock time may
-require manual adjustment. USB initialization parses, but file transfer,
+**Android 15 Data decryption passed on the tested firmware.** Enter the
+existing lock-screen PIN in TWRP: metadata, device-encrypted files and user-0
+credential-encrypted internal storage unlocked while System stayed readable.
+PIN unlock was repeated after a normal Android boot; the clock was correct.
+This is device/firmware-specific, not a general Android 15 support claim. USB initialization parses, but file transfer,
 USB OTG, fastbootd, backup/restore and OTA installation have not all received
 end-to-end testing. This is an unofficial recovery.
 
@@ -70,7 +75,7 @@ the appropriate recovery partition. No userdata formatting was performed.
 ## Settings storage and boot-slot follow-up
 
 Recovery preferences are stored on an inserted portable microSD card at
-`/external_sd/TWRP/.twrps`, because encrypted /data is unavailable. Keep the
+`/external_sd/TWRP/.twrps`, so preferences remain available before PIN unlock. Keep the
 card inserted to load/save preferences. The supplied platform patch fixes
 an unset settings path and construction of the settings filename in the
 pinned TWRP revision. Apply it before building as shown above.
@@ -79,7 +84,7 @@ The recovery-only VINTF fragment declares the packaged Qualcomm HIDL boot
 control implementation. Previously IBootControl::getService() returned null,
 and TWRP misleadingly changed its displayed slot despite failing. The patch
 keeps the displayed slot unchanged on HAL errors and shows an explicit slot
-error. /data mount errors remain a separate decryption limitation.
+error. This is independent of Data decryption.
 
 Codex was used to make all follow-up changes at sammyz's direction.
 
@@ -89,3 +94,32 @@ Only the packaged passthrough implementation is advertised. The Qualcomm
 slot enumeration counts boot_a/boot_b exactly, excluding the boot alias.
 `mona_bootctrl_check` reports the HAL slot count/current slot without changing
 slots; its optional `--set-current` argument reselects the running slot.
+
+
+## Android 15 decryption and diagnostics
+
+The unlock failure was the older recovery code requesting HIDL Gatekeeper
+while the stock phone exposes AIDL. The supplied patches add an opt-in,
+verification-only AIDL client and existing-key-only recovery initialization.
+They never enroll, reset or replace the lock-screen credential. The PIN must
+be entered locally on each recovery boot; it is not stored by these changes.
+
+The patch helper applies the existing recovery patch plus the new recovery
+and vold patches, and is safe to run again. Their bases are pinned in
+`docs/platform-manifest.xml`: recovery `5c3d206a5eeb3d446bcda8248a405a4b278bab5c`
+and vold `a164ba05c5fef288059774a776b2e6e1119957cf`.
+Crypto prebuilt provenance/hashes: `docs/stock-crypto-prebuilts.json`.
+
+With a portable FAT32 microSD inserted, diagnostics start automatically at
+`/external_sd/twrp_logs/boot-<boot-id>`. `latest.txt` identifies the latest
+directory and `current_recovery.log` is refreshed continuously. Logcat rotates
+at 2 MiB with four retained rotations. Logging stays enabled while broader
+reliability is evaluated. Logs can contain device/application identifiers;
+review them before sharing. No private device logs, PINs or encryption-key
+material are included in this repository.
+
+System is a read-only EROFS logical partition in Super. The pinned TWRP core
+disables individual logical-partition backups and offers raw Super backup;
+that is distinct from mount/read access. A Data backup before successful PIN
+unlock is incomplete. Full backup/restore and OTA workflows remain untested.
+Keep slot A on the tested phone: its existing B Android installation boot-looped.
