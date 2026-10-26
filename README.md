@@ -130,3 +130,6 @@ Keep slot A on the tested phone: its existing B Android installation boot-looped
 ## Latest verified build
 
 `3.7.1_12-mona-cli-fd-fix` fixes CLI hangs after mounting the exFAT microSD card by preventing the filesystem daemon from inheriting TWRP command handles. Apply patch 0005 through the patch helper before building. See [the final test report](docs/CLI-FD-FIX-VALIDATION.md) for the image checksum, passing tests, and limits. Codex was used to make all changes in this follow-up. Recovery-only backup passed; restore remains untested.
+
+
+[Download the final tested recovery image and checksum](https://github.com/sammyz/android_device_motorola_mona/releases/tag/twrp-mona-cli-fd-fix-20261026). The release asset is the exact flashed image, verified by SHA-256 during publication.
