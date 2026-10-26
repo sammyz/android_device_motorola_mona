@@ -70,3 +70,6 @@ TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
+TW_USE_LEGACY_BATTERY_SERVICES := true
+TW_CUSTOM_BATTERY_PATH := /sys/class/power_supply/battery
+TW_LOAD_VENDOR_MODULES := "goodix_brl_mmi.ko adsp_loader_dlkm.ko qti_glink_charger.ko"
