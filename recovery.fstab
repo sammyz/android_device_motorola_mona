@@ -40,5 +40,5 @@ system_dlkm /system_dlkm erofs ro logical,slotselect
 /dev/block/bootdevice/by-name/recovery /recovery emmc defaults slotselect
 /dev/block/bootdevice/by-name/dtbo /dtbo emmc defaults slotselect
 /dev/block/bootdevice/by-name/misc /misc emmc defaults defaults
-/dev/block/mmcblk0p1 /external_sd auto defaults defaults
+/dev/block/mmcblk1p1 /external_sd auto defaults defaults
 /dev/block/sda1 /usb_otg auto defaults defaults
