@@ -2,10 +2,17 @@
 set -eu
 device_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 recovery_dir=${1:-bootable/recovery}
-patch="$device_dir/patches/0001-settings-storage-and-slot-errors.patch"
-if git -C "$recovery_dir" apply --reverse --check "$patch" 2>/dev/null; then
-    echo "Recovery settings/slot patch already applied"
-else
-    git -C "$recovery_dir" apply --check "$patch"
-    git -C "$recovery_dir" apply "$patch"
-fi
+vold_dir=${2:-system/vold}
+apply_one() {
+    target=$1
+    patch=$2
+    if git -C "$target" apply --reverse --check "$patch" 2>/dev/null; then
+        echo "Already applied: $(basename "$patch")"
+    else
+        git -C "$target" apply --check "$patch"
+        git -C "$target" apply "$patch"
+    fi
+}
+apply_one "$recovery_dir" "$device_dir/patches/0001-settings-storage-and-slot-errors.patch"
+apply_one "$recovery_dir" "$device_dir/patches/0002-aidl-gatekeeper-link.patch"
+apply_one "$vold_dir" "$device_dir/patches/0003-existing-keys-and-aidl-gatekeeper.patch"

@@ -45,14 +45,15 @@ BOARD_SUPPRESS_SECURE_ERASE := true
 RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 
-# Android 15 wrapped-key decryption is not implemented by this device tree.
-TW_INCLUDE_CRYPTO := false
-TW_INCLUDE_CRYPTO_FBE := false
+# Android 15 FBEv2 + metadata encryption + hardware-wrapped keys.
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
 TW_THEME := portrait_hdpi
 TW_Y_OFFSET := 100
 TW_H_OFFSET := -100
 TW_EXTRA_LANGUAGES := true
-TW_DEVICE_VERSION := mona-settings-slot-fix
+TW_DEVICE_VERSION := mona-aidl-unlock
 TW_BRIGHTNESS_PATH := /sys/class/backlight/panel0-backlight/brightness
 TW_MAX_BRIGHTNESS := 16120
 TW_DEFAULT_BRIGHTNESS := 2000
