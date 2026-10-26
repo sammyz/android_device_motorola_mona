@@ -150,3 +150,8 @@ Verified image: `twrp-mona-merge-check-fix.img`, SHA256
 - User PIN unlock, Data decryption (AIDL Gatekeeper), microSD mounts, and RTC
   accuracy remained verified.
 Codex and Antigravity (agy) were used to make this follow-up at sammyz's direction.
+
+
+## Final exFAT CLI mount fix
+
+See [final build and validation results](CLI-FD-FIX-VALIDATION.md): 23 general checks, 5 targeted checks, and a passing post-reboot remount check. Codex was used to make all changes in this follow-up.

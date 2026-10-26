@@ -125,3 +125,8 @@ disables individual logical-partition backups and offers raw Super backup;
 that is distinct from mount/read access. A Data backup before successful PIN
 unlock is incomplete. Full backup/restore and OTA workflows remain untested.
 Keep slot A on the tested phone: its existing B Android installation boot-looped.
+
+
+## Latest verified build
+
+`3.7.1_12-mona-cli-fd-fix` fixes CLI hangs after mounting the exFAT microSD card by preventing the filesystem daemon from inheriting TWRP command handles. Apply patch 0005 through the patch helper before building. See [the final test report](docs/CLI-FD-FIX-VALIDATION.md) for the image checksum, passing tests, and limits. Codex was used to make all changes in this follow-up. Recovery-only backup passed; restore remains untested.
