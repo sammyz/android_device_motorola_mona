@@ -96,7 +96,7 @@ slot enumeration counts boot_a/boot_b exactly, excluding the boot alias.
 slots; its optional `--set-current` argument reselects the running slot.
 
 
-## Android 15 decryption and diagnostics
+## Android 15 decryption and logging
 
 The unlock failure was the older recovery code requesting HIDL Gatekeeper
 while the stock phone exposes AIDL. The supplied patches add an opt-in,
@@ -110,13 +110,15 @@ and vold patches, and is safe to run again. Their bases are pinned in
 and vold `a164ba05c5fef288059774a776b2e6e1119957cf`.
 Crypto prebuilt provenance/hashes: `docs/stock-crypto-prebuilts.json`.
 
-With a portable FAT32 microSD inserted, diagnostics start automatically at
-`/external_sd/twrp_logs/boot-<boot-id>`. `latest.txt` identifies the latest
-directory and `current_recovery.log` is refreshed continuously. Logcat rotates
-at 2 MiB with four retained rotations. Logging stays enabled while broader
-reliability is evaluated. Logs can contain device/application identifiers;
-review them before sharing. No private device logs, PINs or encryption-key
-material are included in this repository.
+Logging uses TWRP's default behavior: the active recovery log is
+`/tmp/recovery.log`, with the standard TWRP log-saving and manual Copy Log
+actions. There is no custom logging daemon, automatic microSD mount loop,
+periodic log copying, or forced `/external_sd/twrp_logs` output. A microSD card
+is not required for logging. User-requested log export can still target it.
+
+The earlier diagnostic logger was removed because its open logcat file kept
+the microSD busy and prevented unmounting, including before SD-card
+partitioning/formatting. Existing diagnostic files on a card are not deleted.
 
 System is a read-only EROFS logical partition in Super. The pinned TWRP core
 disables individual logical-partition backups and offers raw Super backup;

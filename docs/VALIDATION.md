@@ -78,7 +78,8 @@ Version `3.7.1_12-mona-aidl-unlock`; recovery A readback matched the image.
 - Actual reads from System build.prop and Data packages.xml passed together.
 - PIN unlock repeated after normal Android A startup; original fingerprint and
   SELinux Enforcing were verified. User confirmed the clock remained correct.
-- Continuous microSD logs started automatically on each recovery boot.
+- The earlier diagnostic build started continuous microSD logs automatically;
+  this behavior is superseded by the default-logging follow-up below.
 - Source checks retain all 268 module hashes, matching TWRP fstab copies,
   first-position microSD settings storage and boot-HAL manifest checks.
 
@@ -91,3 +92,31 @@ nonzero Data backup size with complete backup/restore validation.
 Codex implemented the new recovery integration and logger. The earlier
 Antigravity crypto setup is imported with attribution. AOSP Gatekeeper source
 and SavedByLight history/notices remain credited to their original authors.
+
+
+## Default logging follow-up
+
+The custom microSD logger held a logcat output file open, preventing TWRP
+from unmounting the card before partitioning/formatting. Remove its init start
+action, service definition and shell script, retaining TWRP's own logging.
+The active log remains `/tmp/recovery.log`; standard persistence and manual
+Copy Log actions remain managed by the unchanged TWRP core.
+
+This change does not alter Data decryption, settings storage or raw Super
+backup behavior. FAT32's single-file limit still prevents a single 9.61 GiB
+Super image on the tested card. No card formatting is part of validation.
+
+Verified image: `twrp-mona-default-logging.img`, SHA256
+`1ce07926684d478a5b9db2c4f23dfed149e3d5e63a5a4aaee8d3a9e94a59fa7a`; version `3.7.1_12-mona-default-logging`.
+
+- Recovery A flash readback matched the image. No other partition was flashed.
+- Packaged logger script/init service absent; all 321 prebuilt hashes
+  and packaged fstabs matched the source.
+- Default `/tmp/recovery.log` existed and grew during recovery operations.
+- No custom logger service, script, temporary marker or current-boot microSD
+  log directory existed.
+- TWRP unmounted the card successfully, it stayed unmounted, then remounted.
+- The user confirmed PIN unlock; user-0 internal storage and actual Data/System
+  file reads passed together after installing this build.
+- No SD formatting, userdata wipe, full backup/restore or OTA test was performed.
+Codex was used to make this follow-up at sammyz's direction.
