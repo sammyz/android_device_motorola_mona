@@ -120,3 +120,33 @@ Verified image: `twrp-mona-default-logging.img`, SHA256
   file reads passed together after installing this build.
 - No SD formatting, userdata wipe, full backup/restore or OTA test was performed.
 Codex was used to make this follow-up at sammyz's direction.
+
+
+## Dynamic partition unmapping and snapshot merge check follow-up
+
+When checking pending merges or performing a wipe on Virtual A/B devices,
+TWRP previously unmapped only active-slot partitions from its mount list,
+leaving inactive slot devices (e.g., `system_b` and `-cow` devices) active in
+Device Mapper. Subsequent snapshot verification passes failed with EBUSY
+("Device or resource busy").
+
+Enumerate all Super metadata partitions across both slots and unmap them
+via DeviceMapper before SnapshotManager verifies pending merges. Retain
+Android's snapshot manager wipe guard completely intact without bypassing
+or deleting OTA metadata records. Statically link `libdm` in recovery.
+Add a null file pointer check in `gui.cpp` for `orsout` to prevent FORTIFY
+aborts on rapid CLI interactions.
+
+Verified image: `twrp-mona-merge-check-fix.img`, SHA256
+`eadb2fdce2066dd781ddd2e318bc6b07dd3c9da3f0fe44525c7c3880230b27b1`; version `3.7.1_12-mona-merge-check-fix`.
+
+- Recovery A flash readback matched the image. No other partition was flashed.
+- Unit test suite `test-merge-unmap.py` passed with failure-injection stubs.
+- On-device test: "Merge Snapshots" cleanly unmapped `product_a`, `system_a`,
+  `system_b`, `system_dlkm_a`, `system_ext_a`, `vendor_a`, and `vendor_dlkm_a`,
+  and completed snapshot verification with status 0.
+- On-device test: Format Data completed with `make_f2fs -g android` and clean
+  checkpoint verification (status 0).
+- User PIN unlock, Data decryption (AIDL Gatekeeper), microSD mounts, and RTC
+  accuracy remained verified.
+Codex and Antigravity (agy) were used to make this follow-up at sammyz's direction.

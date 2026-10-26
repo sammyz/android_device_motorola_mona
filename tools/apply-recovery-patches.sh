@@ -16,3 +16,4 @@ apply_one() {
 apply_one "$recovery_dir" "$device_dir/patches/0001-settings-storage-and-slot-errors.patch"
 apply_one "$recovery_dir" "$device_dir/patches/0002-aidl-gatekeeper-link.patch"
 apply_one "$vold_dir" "$device_dir/patches/0003-existing-keys-and-aidl-gatekeeper.patch"
+apply_one "$recovery_dir" "$device_dir/patches/0004-super-unmap-all-slots.patch"
