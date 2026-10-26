@@ -52,7 +52,7 @@ TW_THEME := portrait_hdpi
 TW_Y_OFFSET := 100
 TW_H_OFFSET := -100
 TW_EXTRA_LANGUAGES := true
-TW_DEVICE_VERSION := mona-local-verified-layout
+TW_DEVICE_VERSION := mona-settings-slot-fix
 TW_BRIGHTNESS_PATH := /sys/class/backlight/panel0-backlight/brightness
 TW_MAX_BRIGHTNESS := 16120
 TW_DEFAULT_BRIGHTNESS := 2000
@@ -75,3 +75,6 @@ TW_LOAD_VENDOR_BOOT_MODULES := true
 TW_LOAD_VENDOR_MODULES := "goodix_brl_mmi.ko adsp_loader_dlkm.ko qti_glink_charger.ko"
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
+
+# Encrypted data cannot hold settings; keep this path stable during SD probing.
+TW_SETTINGS_STORAGE_PATH := /external_sd

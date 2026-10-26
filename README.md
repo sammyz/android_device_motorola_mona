@@ -36,11 +36,12 @@ used for the verified build. From a Linux TWRP checkout, place this tree at
 `device/motorola/mona`, then run:
 
 ```sh
+sh device/motorola/mona/tools/apply-recovery-patches.sh
 python3 device/motorola/mona/tools/check-tree.py
 export ALLOW_MISSING_DEPENDENCIES=true
 source build/envsetup.sh
 lunch twrp_mona-eng
-mka -j4 recoveryimage
+mka -j4 recoveryimage mona_bootctrl_check
 ```
 
 Output: `out/target/product/mona/recovery.img`. The stock recovery partition
@@ -65,3 +66,26 @@ stock recovery slots. Android booted with its original fingerprint and
 SELinux Enforcing. A temporary `fastboot boot` attempt entered Android with
 the installed normal ramdisk and did not test recovery; validate through
 the appropriate recovery partition. No userdata formatting was performed.
+
+## Settings storage and boot-slot follow-up
+
+Recovery preferences are stored on an inserted portable microSD card at
+`/external_sd/TWRP/.twrps`, because encrypted /data is unavailable. Keep the
+card inserted to load/save preferences. The supplied platform patch fixes
+an unset settings path and construction of the settings filename in the
+pinned TWRP revision. Apply it before building as shown above.
+
+The recovery-only VINTF fragment declares the packaged Qualcomm HIDL boot
+control implementation. Previously IBootControl::getService() returned null,
+and TWRP misleadingly changed its displayed slot despite failing. The patch
+keeps the displayed slot unchanged on HAL errors and shows an explicit slot
+error. /data mount errors remain a separate decryption limitation.
+
+Codex was used to make all follow-up changes at sammyz's direction.
+
+The recovery-only device manifest also replaces the incompatible stock
+Android 15 sepolicy version and the default binder boot HAL fragments.
+Only the packaged passthrough implementation is advertised. The Qualcomm
+slot enumeration counts boot_a/boot_b exactly, excluding the boot alias.
+`mona_bootctrl_check` reports the HAL slot count/current slot without changing
+slots; its optional `--set-current` argument reselects the running slot.

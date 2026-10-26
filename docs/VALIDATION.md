@@ -28,3 +28,39 @@ Encrypted /data remains unsupported. RTC accuracy, USB OTG, backup/restore,
 fastbootd, and OTA flashing are not claimed as fully tested.
 Private phone logs, serial identifiers, recovery backups and host/VM data
 are intentionally excluded from this source contribution.
+
+## Settings and boot-control follow-up
+
+Codex was used to make all follow-up changes at sammyz's direction.
+Verified version: `3.7.1_12-mona-settings-slot-fix`.
+
+- Fixed the unset settings-storage variable and malformed filename in the
+  pinned TWRP source. An explicit `TW_SETTINGS_STORAGE_PATH` keeps the SD path
+  stable when card detection is late after a warm reboot; mount retries are
+  bounded. Settings use `/external_sd/TWRP/.twrps`. A saved clock-format
+  setting loaded after reflashing, was changed back to its original value,
+  then survived another recovery reboot. The card must stay inserted.
+- The stock Android 15 vendor manifest contains a sepolicy version that the
+  Android 12 recovery libvintf cannot parse. A recovery-only manifest and
+  passthrough boot-control declaration replace it, and conflicting default
+  binder boot HAL fragments are neutralized. The native diagnostic reports
+  `slots=2 current=0` after recovery reboot, with no in-memory manifest edits.
+- Qualcomm slot enumeration now excludes the unsuffixed boot alias. The
+  current A slot was reselected successfully through the HAL. Failed HAL
+  operations now return without changing the displayed slot.
+- The user selected B in the GUI; fastboot confirmed B became active. B's
+  Android installation boot-looped. Fastboot restored A; normal Android
+  startup, original fingerprint and SELinux Enforcing were verified. Slot B
+  is not validated as bootable, and its images were not modified. TWRP is
+  installed in recovery_a only. Slot selection is not a backup/restore tool.
+
+Final follow-up image: 37974016 bytes, header v4, kernel size zero.
+SHA-256: `2be94778a3d4aca2a771b41060934dd9cb52c8d391ec075bb7fe490dfd95f65e`.
+Recovery partition readback matched after Android startup. Packaged fstabs,
+VINTF declarations, diagnostic and all stock prebuilt hashes were checked.
+The recovery build, source checker and git diff --check passed.
+
+This contribution includes the required platform patch under `patches/`;
+apply it with `tools/apply-recovery-patches.sh` before building the pinned
+TWRP revision. The script supports repeat application without duplicating
+changes. Android 15 /data decryption remains unsupported.

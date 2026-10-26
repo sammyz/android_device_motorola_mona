@@ -26,6 +26,7 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # TWRP fstab: mount point, filesystem, block device, flags.
+/external_sd auto /dev/block/mmcblk1p1 /dev/block/mmcblk0p1 flags=display=MicroSD;storage;settingsstorage;wipeingui;removable
 /system_root erofs system flags=fsflags=ro;logical;slotselect;display=System;backup=1
 /system_ext erofs system_ext flags=fsflags=ro;logical;slotselect;display=System_Ext;backup=1
 /product erofs product flags=fsflags=ro;logical;slotselect;display=Product;backup=1
@@ -40,5 +41,4 @@
 /recovery emmc /dev/block/bootdevice/by-name/recovery flags=slotselect;display=Recovery;backup=1;flashimg=1
 /dtbo emmc /dev/block/bootdevice/by-name/dtbo flags=slotselect;display=DTBO;backup=1;flashimg=1
 /misc emmc /dev/block/bootdevice/by-name/misc
-/external_sd auto /dev/block/mmcblk1p1 /dev/block/mmcblk0p1 flags=display=MicroSD;storage;wipeingui;removable
 /usb_otg auto /dev/block/sda1 flags=display=USB_OTG;storage;wipeingui;removable

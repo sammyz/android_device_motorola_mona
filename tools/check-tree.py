@@ -1,5 +1,6 @@
 from pathlib import Path
 import json, re, hashlib
+import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parents[1]
 errors = []
@@ -28,6 +29,17 @@ assert (mods / 'goodix_brl_mmi.ko').is_file()
 android_lines = [x.split() for x in (root / 'recovery.fstab').read_text().splitlines() if x and not x.startswith('#')]
 assert all(len(x) == 5 for x in android_lines)
 assert any(x[1:3] == ['/misc', 'emmc'] for x in android_lines)
+assert lines[0].startswith('/external_sd ')
+assert 'settingsstorage' in lines[0]
+assert android_lines[0][1] == '/external_sd'
+assert (root / 'recovery/root/system/etc/twrp.fstab').read_bytes() == (root / 'twrp.fstab').read_bytes()
+vintf = root / 'recovery/root/vendor/etc/vintf'
+assert ET.parse(vintf / 'manifest.xml').getroot().find('sepolicy') is None
+boot = ET.parse(vintf / 'manifest/mona-bootctrl.xml').getroot()
+assert boot.find('hal/name').text == 'android.hardware.boot'
+assert boot.find('hal/transport').text == 'passthrough'
+for name in ['android.hardware.boot@1.1.xml', 'android.hardware.boot@1.2.xml']:
+    assert ET.parse(vintf / 'manifest' / name).getroot().find('hal') is None
 module_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in mods.glob('*.ko')}
 report = {'errors':errors,'fstab_entries':len(lines),'module_count':len(module_hashes),
           'module_hashes':module_hashes}
