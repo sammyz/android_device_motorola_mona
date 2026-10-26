@@ -1,0 +1,30 @@
+name: Publish verified mona recovery
+on:
+  push:
+    branches: [mona-recovery-builds]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble and verify the tested image
+        shell: bash
+        run: |
+          cat builds/cli-fd-fix/image.part-* > twrp-mona-cli-fd-fix.img
+          test "$(stat -c %s twrp-mona-cli-fd-fix.img)" = 45465600
+          echo "5d9b6900e7098a006e73dc5307b8ac045e1963c3b2e47ea43e775ca4f978260d  twrp-mona-cli-fd-fix.img" > twrp-mona-cli-fd-fix.img.sha256
+          sha256sum --check twrp-mona-cli-fd-fix.img.sha256
+      - name: Publish unofficial tested recovery
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          gh release create twrp-mona-cli-fd-fix-20261026 \
+            twrp-mona-cli-fd-fix.img twrp-mona-cli-fd-fix.img.sha256 \
+            --target "$GITHUB_SHA" --prerelease \
+            --title "TWRP mona: tested exFAT CLI fix (2026-10-26)" \
+            --notes-file docs/CLI-FD-FIX-VALIDATION.md
