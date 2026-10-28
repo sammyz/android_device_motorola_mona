@@ -47,7 +47,7 @@ System, and its System build-property file was readable alongside Data.
 Data backup excludes internal-storage media, including photos and Downloads.
 This is not a full-device backup, and restore functionality is not claimed as
 tested. No wipe, format, metadata erase, credential reset, ROM installation or
-slot-B boot was performed. Future ROM/security-patch changes can require
+slot-B boot was performed during the backup-validation pass above. Future ROM/security-patch changes can require
 updating the recovery crypto configuration. Private logs, user backups, raw
 metadata and imported agy conversation messages must not be published.
 
@@ -56,4 +56,27 @@ metadata and imported agy conversation messages must not be published.
 - `ae3352402cc6b706c13cc5bf244193f82a1348ee`: match the installed crypto values.
 - `23b749cb58c7309dc458ca11c32bbac4319df904`: recognize ext4 hybrid partitions.
 
-Branch: `mona-lineage16-recovery`. These changes have not been pushed.
+Publication branch: `mona-lineage16-recovery`. The commit IDs above identify
+local development history, preserved in the source bundle.
+
+
+## Subsequent clean-install tests and known formatting limitation
+
+Later user-authorized reset and ROM-install experiments are separate from the
+successful backup-validation pass above. TWRP Factory Reset completed. Format
+Data initially failed because the old `userdata` device-mapper mapping held
+the raw block device open. After the filesystem was unmounted and that stale
+mapping was removed, Format Data completed successfully. Automatic cleanup of
+this case is not fixed by this image. This is a known formatting limitation,
+not a claim that all recovery functions have been certified.
+
+The original full unofficial LineageOS ZIP installed through TWRP and was
+also sideloaded through matching Lineage Recovery, but bootloops remained.
+The separately checked custom hybrid installer booted after a clean format.
+These experiments do not isolate the original bootloop's cause, and this
+Data-compatibility build does not claim to fix full-ROM or OTA installation.
+
+Only the tested hybrid's user-0 Data access is claimed. Other security-patch
+levels, credentials, profiles, firmware variants, and the native full-vendor
+Android 16 build require separate validation. Do not infer general Android 16
+support from this device-specific configuration.
