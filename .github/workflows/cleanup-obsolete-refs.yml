@@ -1,0 +1,20 @@
+name: Remove obsolete recovery publication refs
+on:
+  push:
+    branches: [mona-android16-builds]
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete only superseded names
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for ref in heads/mona-lineage16-builds heads/mona-lineage16-recovery tags/twrp-mona-lineage16-test1-20261027; do
+            gh api --method DELETE "repos/$GH_REPO/git/refs/$ref"
+          done
