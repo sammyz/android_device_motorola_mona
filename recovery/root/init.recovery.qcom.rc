@@ -32,10 +32,9 @@ on early-init
     setprop ro.mona.recovery.readonly_keys true
     setprop ro.mona.gatekeeper_aidl true
     write /sys/module/firmware_class/parameters/path /firmware/image
-    exec u:r:recovery:s0 -- /system/bin/resetprop ro.build.version.release 15
-    exec u:r:recovery:s0 -- /system/bin/resetprop ro.build.version.security_patch 2025-05-01
+    exec u:r:recovery:s0 -- /system/bin/resetprop ro.build.version.release 16
+    exec u:r:recovery:s0 -- /system/bin/resetprop ro.build.version.security_patch 2026-10-01
     exec u:r:recovery:s0 -- /system/bin/resetprop ro.vendor.build.security_patch 2025-05-01
-    exec u:r:recovery:s0 -- /system/bin/resetprop ro.bootimage.build.security_patch 2025-05-01
 
 on init
     chmod 0660 /dev/qseecom
