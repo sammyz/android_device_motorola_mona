@@ -27,9 +27,9 @@
 
 # Android v2 fstab for fs_mgr and bootloader-message handling.
 /dev/block/mmcblk1p1 /external_sd auto defaults defaults
-system /system_root erofs ro logical,slotselect
-system_ext /system_ext erofs ro logical,slotselect
-product /product erofs ro logical,slotselect
+system /system_root ext4 ro,noload logical,slotselect
+system_ext /system_ext ext4 ro,noload logical,slotselect
+product /product ext4 ro,noload logical,slotselect
 vendor /vendor erofs ro logical,slotselect
 vendor_dlkm /vendor_dlkm erofs ro logical,slotselect
 system_dlkm /system_dlkm erofs ro logical,slotselect
