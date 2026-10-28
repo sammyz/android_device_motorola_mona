@@ -1,0 +1,26 @@
+name: Correct TWRP Android 16 publication names
+on:
+  push:
+    branches: [mona-lineage16-builds]
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename release and assets while preserving tested bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          gh api --method PATCH repos/$GH_REPO/releases/426144745 -f tag_name=twrp-mona-android16-test1-20261027 -f name="TWRP mona: Android 16 Data compatibility (test1)"
+          gh api --method PATCH repos/$GH_REPO/releases/assets/683354538 -f name=twrp-mona-android16-test1.img
+          gh api --method PATCH repos/$GH_REPO/releases/assets/683354540 -f name=mona-android16-recovery.bundle
+          gh release edit twrp-mona-android16-test1-20261027 --notes-file docs/ANDROID16-RELEASE-NOTES.md
+          echo "6d4bdc0a416721f1b5fee763181a3b50c6094f9e09dfda118432c83668b78770  twrp-mona-android16-test1.img" > twrp-mona-android16-test1.img.sha256
+          gh release upload twrp-mona-android16-test1-20261027 twrp-mona-android16-test1.img.sha256 --clobber
+          gh api --method DELETE repos/$GH_REPO/releases/assets/683354536
+          gh release download twrp-mona-android16-test1-20261027 --pattern twrp-mona-android16-test1.img
+          sha256sum --check twrp-mona-android16-test1.img.sha256
