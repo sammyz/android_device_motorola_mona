@@ -7,8 +7,8 @@ installation, not a universal claim for all Android 16 ROMs or patch levels.
 
 ## Artifact and changes
 
-- Version: `3.7.1_12-mona-lineage16-test1`.
-- Image: `twrp-mona-lineage16-test1.img`, 45,465,600 bytes.
+- Version: `3.7.1_12-mona-android16-test1`.
+- Image: `twrp-mona-android16-test1.img`, 45,465,600 bytes.
 - SHA256: `6d4bdc0a416721f1b5fee763181a3b50c6094f9e09dfda118432c83668b78770`.
 - Installed to recovery_a; active slot A.
 - Match running Android release 16 and System patch level 2026-10-01, retain
@@ -56,7 +56,7 @@ metadata and imported agy conversation messages must not be published.
 - `ae3352402cc6b706c13cc5bf244193f82a1348ee`: match the installed crypto values.
 - `23b749cb58c7309dc458ca11c32bbac4319df904`: recognize ext4 hybrid partitions.
 
-Publication branch: `mona-lineage16-recovery`. The commit IDs above identify
+Publication branch: `mona-android16-recovery`. The commit IDs above identify
 local development history, preserved in the source bundle.
 
 
@@ -80,3 +80,6 @@ Only the tested hybrid's user-0 Data access is claimed. Other security-patch
 levels, credentials, profiles, firmware variants, and the native full-vendor
 Android 16 build require separate validation. Do not infer general Android 16
 support from this device-specific configuration.
+
+
+Published naming uses `twrp-mona-android16-test1`. The unchanged, previously tested image still reports `3.7.1_12-mona-lineage16-test1` internally; its SHA256 remains unchanged. Source now uses `mona-android16-test1` for subsequent builds. LineageOS references describe the tested ROM, not recovery branding.

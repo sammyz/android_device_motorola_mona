@@ -1,8 +1,8 @@
 > **Android 16 compatibility branch:** This branch targets the tested LineageOS
 > 23.2 Treble hybrid on mona, using Android 16 System with the stock Motorola
-> vendor/kernel. Its build is `3.7.1_12-mona-lineage16-test1`. The older published
+> vendor/kernel. Its build is `3.7.1_12-mona-android16-test1`. The older published
 > CLI-fix release below targets stock Android 15 and is not this branch's image.
-> See [Android 16 validation](docs/LINEAGE16-VALIDATION.md) for the exact checksum,
+> See [Android 16 validation](docs/ANDROID16-VALIDATION.md) for the exact checksum,
 > passing Data backup and reboot tests, and compatibility limits. Codex was used
 > to make these follow-up changes. The exact artifact checksum is recorded in the validation report.
 
@@ -146,8 +146,8 @@ Keep slot A on the tested phone: its existing B Android installation boot-looped
 
 ## Android 16 compatibility artifact for this branch
 
-Build version: `3.7.1_12-mona-lineage16-test1` (unofficial prerelease).
-Image: `twrp-mona-lineage16-test1.img`, 45,465,600 bytes.
+Build version: `3.7.1_12-mona-android16-test1` (unofficial prerelease).
+Image: `twrp-mona-android16-test1.img`, 45,465,600 bytes.
 SHA256: `6d4bdc0a416721f1b5fee763181a3b50c6094f9e09dfda118432c83668b78770`.
 
 This branch targets LineageOS 23.2 System with patch level 2026-10-01 and
@@ -155,9 +155,12 @@ stock Motorola Android 15 vendor with patch level 2025-05-01 and the matching
 6.6.50 kernel. It is not the full native Android 16 vendor configuration.
 Data decryption, a real Data backup, all six logical partition reads, and a
 normal Android/recovery reboot cycle passed. Restore is untested. Data backup
-excludes internal-storage media. See the [validation and known limitations](docs/LINEAGE16-VALIDATION.md),
+excludes internal-storage media. See the [validation and known limitations](docs/ANDROID16-VALIDATION.md),
 including the stale userdata mapping issue during Format Data.
 
 Codex was used to make all Android 16 compatibility changes, at the user's
 direction. Existing source history, original notices, and prior Antigravity
 work are retained and credited above.
+
+
+Published naming uses `twrp-mona-android16-test1`. The unchanged, previously tested image still reports `3.7.1_12-mona-lineage16-test1` internally; its SHA256 remains unchanged. Source now uses `mona-android16-test1` for subsequent builds. LineageOS references describe the tested ROM, not recovery branding.
