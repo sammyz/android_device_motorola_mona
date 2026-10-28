@@ -30,3 +30,11 @@ persist.vendor.sensors.mot_tap=true
 ro.vendor.sensors.glance_approach=false
 ro.vendor.sensors.mot_ltv=true
 ro.vendor.sensors.prox_for_call=fasle
+
+# VoLTE, VoNR & IMS
+persist.radio.is_vonr_enabled_0=true
+persist.vendor.radio.volte_enabled=1
+persist.vendor.radio.vonr_enabled=1
+persist.dbg.volte_avail_ovr=1
+persist.dbg.vt_avail_ovr=1
+persist.dbg.wfc_avail_ovr=1

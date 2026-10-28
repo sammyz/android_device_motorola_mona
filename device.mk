@@ -40,6 +40,9 @@ $(call inherit-product, device/motorola/sm6475-common/common.mk)
 
 # Overlay
 PRODUCT_PACKAGES += \
+    CarrierConfigResDevice \
+    TelephonyResDevice \
+    atel_ui_trigger \
     FrameworksResDevice \
     LineageSdkResDevice \
     LineageSystemUIResDevice \

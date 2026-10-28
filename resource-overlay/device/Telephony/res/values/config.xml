@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SPDX-FileCopyrightText: 2026 The LineageOS Project
+    SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- String indicating the package name of the device ImsService implementation for MMTEL. -->
+    <string name="config_ims_mmtel_package" translatable="false">org.codeaurora.ims</string>
+    <string name="config_ims_package_override_string" translatable="false">org.codeaurora.ims</string>
+</resources>

@@ -1,0 +1,9 @@
+service product.atel_ui_trigger /product/bin/atel_ui_trigger 1
+    class late_start
+    user radio
+    group radio
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start product.atel_ui_trigger
