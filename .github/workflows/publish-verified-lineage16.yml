@@ -1,0 +1,29 @@
+name: Publish verified mona Android 16 compatibility recovery
+on:
+  push:
+    branches: [mona-lineage16-builds]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble and verify the exact tested artifacts
+        shell: bash
+        run: |
+          cat builds/lineage16-test1/image.part-* > twrp-mona-lineage16-test1.img
+          cp builds/lineage16-test1/source.bundle mona-lineage16-recovery.bundle
+          test "$(stat -c %s twrp-mona-lineage16-test1.img)" = 45465600
+          echo "6d4bdc0a416721f1b5fee763181a3b50c6094f9e09dfda118432c83668b78770  twrp-mona-lineage16-test1.img" > twrp-mona-lineage16-test1.img.sha256
+          echo "170052f703d9f0da0b889c1596ff9b369daa83755f0cb1b8f0c74590efc2eb4d  mona-lineage16-recovery.bundle" > source.bundle.sha256
+          sha256sum --check twrp-mona-lineage16-test1.img.sha256
+          sha256sum --check source.bundle.sha256
+      - name: Publish unofficial compatibility prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          gh release create twrp-mona-lineage16-test1-20261027             twrp-mona-lineage16-test1.img twrp-mona-lineage16-test1.img.sha256             mona-lineage16-recovery.bundle             --target "$GITHUB_SHA" --prerelease             --title "TWRP mona: Android 16 hybrid Data compatibility (test1)"             --notes-file docs/LINEAGE16-RELEASE-NOTES.md
