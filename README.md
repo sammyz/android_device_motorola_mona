@@ -1,3 +1,11 @@
+> **Android 16 compatibility branch:** This branch targets the tested LineageOS
+> 23.2 Treble hybrid on mona, using Android 16 System with the stock Motorola
+> vendor/kernel. Its build is `3.7.1_12-mona-lineage16-test1`. The older published
+> CLI-fix release below targets stock Android 15 and is not this branch's image.
+> See [Android 16 validation](docs/LINEAGE16-VALIDATION.md) for the exact checksum,
+> passing Data backup and reboot tests, and compatibility limits. Codex was used
+> to make these follow-up changes. This branch has not been published.
+
 # TWRP device tree for Motorola mona
 
 Moto G Stylus (2025), tested on **XT2517-1** with Android 15
