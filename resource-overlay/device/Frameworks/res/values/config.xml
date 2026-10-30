@@ -277,6 +277,9 @@
          non-zero. -->
     <integer name="config_defaultPeakRefreshRate">120</integer>
 
+    <!-- Default refresh rate in low zone locked to 120Hz -->
+    <integer name="config_defaultRefreshRateInZone">120</integer>
+
     <!-- The display uses different gamma curves for different refresh rates. It's hard for panel
          vendors to tune the curves to have exact same brightness for different refresh rate. So
          flicker could be observed at switch time. The issue is worse at the gamma lower end.
