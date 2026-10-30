@@ -49,6 +49,11 @@ PRODUCT_PACKAGES += \
     SettingsResDevice \
     SystemUIResDevice
 
+# Display
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/display/display_id_4630946747577212034.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946747577212034.xml \
+    $(LOCAL_PATH)/configs/display/display_id_4630946916234099603.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946916234099603.xml
+
 # Audio
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_parrot/audio_policy_configuration.xml \

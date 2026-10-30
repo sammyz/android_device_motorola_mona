@@ -1,7 +1,7 @@
-service product.atel_ui_trigger /product/bin/atel_ui_trigger 1
+service product.atel_ui_trigger /product/bin/atel_ui_trigger
     class late_start
-    user radio
-    group radio
+    user root
+    group root system radio
     oneshot
     disabled
 

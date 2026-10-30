@@ -129,6 +129,25 @@ lptools unmap product$SLOT >/dev/null 2>&1 || true
 ui_print "[*] Formatting metadata filesystem..."
 make_f2fs -f /dev/block/by-name/metadata >/dev/null 2>&1 || true
 
+# 8. Ensure Magisk service.d script exists if /data is present
+if mountpoint -q /data 2>/dev/null || mount /data 2>/dev/null; then
+    mkdir -p /data/adb/service.d 2>/dev/null
+    cat << 'EOF' > /data/adb/service.d/persist_adb.sh
+#!/system/bin/sh
+sleep 2
+settings put system min_refresh_rate 120.0
+settings put system peak_refresh_rate 120.0
+settings put system screen_brightness_mode 0
+settings put secure sms_default_application com.android.messaging
+cmd phone cc set-value -s 0 -p imssms.sms_over_ims_supported_bool true
+cmd phone ims set-ims-service -s 0 -c org.codeaurora.ims
+cmd phone ims enable -s 0
+service call vendor.qti.hardware.radio.qcrilhook.IQtiOemHook/oemhook0 2 i32 1001 i32 17 i32 1296387921 i32 1263488840 i32 524314 i32 1 i32 1
+service call vendor.qti.hardware.radio.qcrilhook.IQtiOemHook/oemhook1 2 i32 1002 i32 17 i32 1296387921 i32 1263488840 i32 524314 i32 1 i32 1
+EOF
+    chmod 755 /data/adb/service.d/persist_adb.sh 2>/dev/null
+fi
+
 set_progress 1.0
 ui_print "=========================================="
 ui_print " LineageOS 23.2 Installed Successfully!"
