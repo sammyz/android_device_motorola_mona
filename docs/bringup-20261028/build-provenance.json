@@ -1,0 +1,57 @@
+[
+  {
+    "path": "build/soong",
+    "head": "9aa045a2aef10b8089e32e847fed26d9aa3d61be",
+    "status": " M cc/prebuilt.go\n M java/droidstubs.go\n",
+    "patch": "build_soong.patch"
+  },
+  {
+    "path": "vendor/lineage",
+    "head": "ca37c450e98fefb0cd53b864c469c1a7d024c53f",
+    "status": " M build/tasks/kernel.mk\n M tools/clean_headers.sh\n",
+    "patch": "vendor_lineage.patch"
+  },
+  {
+    "path": "bootable/recovery",
+    "head": "acd99f7c48e0229eaedd40aa3e2adcbabe2dc283",
+    "status": ""
+  },
+  {
+    "path": "device/lineage/sepolicy",
+    "head": "ebc3e000f4f806c21b5f31fa19270943203dc98a",
+    "status": "",
+    "origin": "https://github.com/moto-sm8450/android_device_lineage_sepolicy"
+  },
+  {
+    "path": "hardware/motorola",
+    "head": "4d9daeb995cb57b443da86b917ee7e63bf1c883e",
+    "status": "",
+    "origin": "https://github.com/moto-sm8450/android_hardware_motorola"
+  },
+  {
+    "path": "hardware/lineage/interfaces",
+    "head": "e0bbf71d9c37b64b178d00d1ac500c135e0661f2",
+    "status": "",
+    "origin": "https://github.com/moto-sm8450/android_hardware_lineage_interfaces"
+  },
+  {
+    "path": "kernel/motorola/sm6475",
+    "head": "e5971fb1410aec78de3e10264a11bdd65ad9d7ea",
+    "status": " M arch/arm64/boot/dts/vendor\n?? arch/arm64/configs/vendor/ext_config/\n",
+    "origin": "https://github.com/LineageOS/android_kernel_motorola_sm6475",
+    "patch": "kernel_motorola_sm6475.patch"
+  },
+  {
+    "path": "kernel/motorola/sm6475-modules",
+    "head": "47a594be4cde8ec4685416e8b3d58c36939c3945",
+    "status": " M Android.bp\n M qcom/opensource/securemsm-kernel/smcinvoke/compat/trace_smcinvoke.h\n?? motorola/\n",
+    "origin": "https://github.com/LineageOS/android_kernel_motorola_sm6475-modules",
+    "patch": "kernel_motorola_sm6475-modules.patch"
+  },
+  {
+    "path": "kernel/motorola/sm6475-devicetrees",
+    "head": "061cf08dee374c8afb8a88437070436dda94685d",
+    "status": "",
+    "origin": "https://github.com/LineageOS/android_kernel_motorola_sm6475-devicetrees"
+  }
+]
