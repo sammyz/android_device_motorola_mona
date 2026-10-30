@@ -10,5 +10,19 @@
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
         <boolean name="vonr_enabled_bool" value="true" />
         <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+
+        <!-- 5G NR Availabilities: NSA (1) and SA (2) -->
+        <int-array name="carrier_nr_availabilities_int_array" num="2">
+            <item value="1" />
+            <item value="2" />
+        </int-array>
+
+        <!-- Network Mode Selection: Show 5G & LTE, Hide 3G & 2G -->
+        <boolean name="carrier_config_applied_bool" value="true" />
+        <boolean name="hide_carrier_network_settings_bool" value="false" />
+        <boolean name="hide_preferred_network_type_bool" value="false" />
+        <boolean name="world_phone_bool" value="false" />
+        <boolean name="prefer_3g_visibility_bool" value="false" />
+        <boolean name="prefer_2g_bool" value="false" />
     </carrier_config>
 </carrier_config_list>
