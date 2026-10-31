@@ -1,3 +1,5 @@
+> Repository branches were consolidated on 2026-10-31. See [BRANCHES.md](BRANCHES.md) for the two maintained source branches and archived build files.
+
 # LineageOS Device Tree for Motorola mona (Moto G Stylus 2025, XT2517-1)
 
 ## Overview
