@@ -1,3 +1,5 @@
+> Repository branches were consolidated on 2026-10-31. See [BRANCHES.md](BRANCHES.md) for the two maintained source branches and archived build files.
+
 > **Android 16 compatibility branch:** This branch targets the tested LineageOS
 > 23.2 Treble hybrid on mona, using Android 16 System with the stock Motorola
 > vendor/kernel. Its build is `3.7.1_12-mona-android16-test1`. The older published
