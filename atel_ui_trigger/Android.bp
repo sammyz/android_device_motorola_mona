@@ -1,0 +1,15 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "atel_ui_trigger",
+    product_specific: true,
+    srcs: ["main.cpp"],
+    shared_libs: [
+        "libbinder_ndk",
+        "liblog",
+    ],
+    init_rc: ["atel_ui_trigger.rc"],
+}

@@ -40,11 +40,19 @@ $(call inherit-product, device/motorola/sm6475-common/common.mk)
 
 # Overlay
 PRODUCT_PACKAGES += \
+    CarrierConfigResDevice \
+    TelephonyResDevice \
+    atel_ui_trigger \
     FrameworksResDevice \
     LineageSdkResDevice \
     LineageSystemUIResDevice \
     SettingsResDevice \
     SystemUIResDevice
+
+# Display
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/display/display_id_4630946747577212034.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946747577212034.xml \
+    $(LOCAL_PATH)/configs/display/display_id_4630946916234099603.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946916234099603.xml
 
 # Audio
 PRODUCT_COPY_FILES += \
