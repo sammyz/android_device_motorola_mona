@@ -27,9 +27,9 @@
 
 # TWRP fstab: mount point, filesystem, block device, flags.
 /external_sd auto /dev/block/mmcblk1p1 /dev/block/mmcblk0p1 flags=display=MicroSD;storage;settingsstorage;wipeingui;removable
-/system_root erofs system flags=fsflags=ro;logical;slotselect;display=System;backup=1
-/system_ext erofs system_ext flags=fsflags=ro;logical;slotselect;display=System_Ext;backup=1
-/product erofs product flags=fsflags=ro;logical;slotselect;display=Product;backup=1
+/system_root ext4 system flags=fsflags=ro,noload;logical;slotselect;display=System;backup=1
+/system_ext ext4 system_ext flags=fsflags=ro,noload;logical;slotselect;display=System_Ext;backup=1
+/product ext4 product flags=fsflags=ro,noload;logical;slotselect;display=Product;backup=1
 /vendor erofs vendor flags=fsflags=ro;logical;slotselect;display=Vendor;backup=1
 /vendor_dlkm erofs vendor_dlkm flags=fsflags=ro;logical;slotselect;display=Vendor_DLKM;backup=1
 /system_dlkm erofs system_dlkm flags=fsflags=ro;logical;slotselect;display=System_DLKM;backup=1
